@@ -307,7 +307,7 @@
     }
     
     if([self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
-        [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:[self mediaInfoFromAsset:asset]];
+        [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:@[asset]];
     }
 }
 
@@ -318,13 +318,7 @@
     }
     
     if([self.delegate respondsToSelector:@selector(imagePickerController:didFinishPickingMediaWithInfo:)]) {
-        NSMutableArray *info = [NSMutableArray array];
-        
-        for(ALAsset *asset in assets) {
-            [info addObject:[self mediaInfoFromAsset:asset]];
-        }
-        
-        [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:info];
+        [self.delegate imagePickerController:self didFinishPickingMediaWithInfo:assets];
     }
 }
 
