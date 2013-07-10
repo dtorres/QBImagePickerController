@@ -17,8 +17,6 @@
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
-    [imagePickerController release];
-    [navigationController release];
 }
 
 - (IBAction)pickMultiplePhotos:(id)sender
@@ -29,8 +27,6 @@
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
-    [imagePickerController release];
-    [navigationController release];
 }
 
 - (IBAction)pickWithLimitation:(id)sender
@@ -44,8 +40,6 @@
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
-    [imagePickerController release];
-    [navigationController release];
 }
 
 
@@ -53,7 +47,7 @@
 
 - (void)imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingMediaWithInfo:(id)info
 {
-    if(imagePickerController.allowsMultipleSelection) {
+    if (imagePickerController.allowsMultipleSelection) {
         NSArray *mediaInfoArray = (NSArray *)info;
         
         NSLog(@"Selected %d photos", mediaInfoArray.count);
