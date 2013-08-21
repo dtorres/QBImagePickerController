@@ -114,9 +114,13 @@
 - (void)reloadData
 {
     // Reload assets
+    [self.assets removeAllObjects];
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
-            [self.assets addObject:result];
+            NSNumber *duration = [result valueForProperty:ALAssetPropertyDuration];
+            if (![duration isKindOfClass:[NSNumber class]] || duration.doubleValue <= 30.0f) {
+                [self.assets addObject:result];
+            }
         }
     }];
     

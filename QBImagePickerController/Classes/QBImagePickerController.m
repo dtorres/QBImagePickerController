@@ -93,8 +93,17 @@
             }
             
             if (assetsGroup.numberOfAssets > 0) {
-                [self.assetsGroups addObject:assetsGroup];
-                [self.tableView reloadData];
+                NSMutableArray *invalidAssets = [NSMutableArray new];
+                [assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                    NSNumber *duration = [result valueForProperty:ALAssetPropertyDuration];
+                    if ([duration isKindOfClass:[NSNumber class]] && duration.doubleValue > 30.0f) {
+                        [invalidAssets addObject:result];
+                    }
+                }];
+                if ([invalidAssets count] < assetsGroup.numberOfAssets) {
+                    [self.assetsGroups addObject:assetsGroup];
+                    [self.tableView reloadData];
+                }
             }
         }
     };
