@@ -62,7 +62,11 @@
 {
     [super viewWillAppear:animated];
     
-    // Reload
+    // Don't reload if already initialized.
+    if (self.selectedAssets.count > 0) {
+        return;
+    }
+    
     [self reloadData];
     
     if (self.fullScreenLayoutEnabled) {
@@ -85,7 +89,6 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(numberOfRows - 1) inSection:2];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
