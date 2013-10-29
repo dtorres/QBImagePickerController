@@ -42,26 +42,26 @@
         self.selectedAssets = [NSMutableOrderedSet orderedSet];
         
         self.imageSize = CGSizeMake(75, 75);
-        
-        // Table View
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        tableView.dataSource = self;
-        tableView.delegate = self;
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.allowsSelection = YES;
-        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        [self.view addSubview:tableView];
-        self.tableView = tableView;
     }
     
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)loadView
 {
-    [super viewWillAppear:animated];
-    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    tableView.allowsSelection = YES;
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.tableView = tableView;
+    self.view = tableView;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     // Reload
     [self reloadData];
     
@@ -325,15 +325,14 @@
             [(QBImagePickerAssetCell *)cell setAssets:assets];
             
             // Set selection states
-            for (NSUInteger i = 0; i < numberOfAssetsToSet; i++) {
-                ALAsset *asset = [self.assets objectAtIndex:(offset + i)];
+            [assets enumerateObjectsUsingBlock:^(ALAsset *asset, NSUInteger idx, BOOL *stop) {
                 
                 if ([self.selectedAssets containsObject:asset]) {
-                    [(QBImagePickerAssetCell *)cell selectAssetAtIndex:i];
+                    [(QBImagePickerAssetCell *)cell selectAssetAtIndex:idx];
                 } else {
-                    [(QBImagePickerAssetCell *)cell deselectAssetAtIndex:i];
+                    [(QBImagePickerAssetCell *)cell deselectAssetAtIndex:idx];
                 }
-            }
+            }];
         }
             break;
     }
