@@ -22,7 +22,6 @@
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         titleLabel.font = [UIFont boldSystemFontOfSize:17];
         titleLabel.textColor = [UIColor blackColor];
-        titleLabel.highlightedTextColor = [UIColor whiteColor];
         titleLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         
         [self.contentView addSubview:titleLabel];
@@ -32,7 +31,6 @@
         UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         countLabel.font = [UIFont systemFontOfSize:17];
         countLabel.textColor = [UIColor colorWithWhite:0.498 alpha:1.0];
-        countLabel.highlightedTextColor = [UIColor whiteColor];
         countLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         
         [self.contentView addSubview:countLabel];
@@ -72,8 +70,13 @@
         countLabelFrame = CGRectMake(titleLabelFrame.origin.x + titleLabelFrame.size.width + 10, 0, countTextSize.width, imageViewSize);
     }
     
+    CGRect imageViewFrame = self.imageView.frame;
+    imageViewFrame.origin.x = 0;
+    
+    self.imageView.frame = imageViewFrame;
     self.titleLabel.frame = titleLabelFrame;
     self.countLabel.frame = countLabelFrame;
+    self.separatorInset = (UIEdgeInsets){ .left = CGRectGetMinX(titleLabelFrame)};
 }
 
 @end
