@@ -63,6 +63,9 @@
 {
     [super viewDidLoad];
     
+    // Reload
+    [self reloadData];
+    
     if (self.fullScreenLayoutEnabled) {
         // Set bar styles
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
@@ -77,14 +80,6 @@
         
         [self setWantsFullScreenLayout:YES];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    // Reload
-    [self reloadData];
     
     // Scroll to bottom
     NSInteger numberOfRows = [self.tableView numberOfRowsInSection:2];
@@ -230,7 +225,12 @@
             break;
         case 2:
         {
-            NSInteger numberOfAssetsInRow = self.navigationController.view.bounds.size.width / self.imageSize.width;
+            CGFloat width = self.view.frame.size.width;
+            if (width == 0.0f) {
+                width = [UIScreen mainScreen].bounds.size.width;
+            }
+            
+            NSInteger numberOfAssetsInRow = width / self.imageSize.width;
             numberOfRowsInSection = self.assets.count / numberOfAssetsInRow;
             if ((self.assets.count - numberOfRowsInSection * numberOfAssetsInRow) > 0) numberOfRowsInSection++;
         }
