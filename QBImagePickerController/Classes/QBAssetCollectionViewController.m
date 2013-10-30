@@ -118,7 +118,7 @@
     [self.assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
             NSNumber *duration = [result valueForProperty:ALAssetPropertyDuration];
-            if (![duration isKindOfClass:[NSNumber class]] || duration.doubleValue <= 30.0f) {
+            if (![duration isKindOfClass:[NSNumber class]] || duration.doubleValue <= (60 * 3)) {
                 [self.assets addObject:result];
             }
         }
